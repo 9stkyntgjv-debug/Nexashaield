@@ -1,0 +1,649 @@
+ <!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#080808">
+
+  <title>NexaShield — Sécurité numérique</title>
+
+  <style>
+
+    :root {
+
+      color-scheme: dark;
+
+      --red: #ff303b;
+
+      --bg: #080808;
+
+      --panel: #151515;
+
+      --text: #f5f5f5;
+
+      --muted: #a5a5a5;
+
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+
+      margin: 0;
+
+      padding: 20px;
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+
+    }
+
+    header {
+
+      text-align: center;
+
+      padding: 22px 0;
+
+    }
+
+    .logo {
+
+      display: inline-flex;
+
+      width: 68px;
+
+      height: 68px;
+
+      align-items: center;
+
+      justify-content: center;
+
+      border: 2px solid var(--red);
+
+      border-radius: 18px;
+
+      color: var(--red);
+
+      font-size: 43px;
+
+      font-weight: 900;
+
+      box-shadow: 0 0 25px #ff303b22;
+
+    }
+
+    h1 {
+
+      margin-bottom: 5px;
+
+      letter-spacing: 2px;
+
+    }
+
+    h1 span { color: var(--red); }
+
+    .subtitle {
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+    }
+
+    .status {
+
+      margin: 20px 0;
+
+      padding: 16px;
+
+      border: 1px solid #333;
+
+      border-radius: 12px;
+
+      background: var(--panel);
+
+    }
+
+    .status strong { color: var(--red); }
+
+    .dot {
+
+      display: inline-block;
+
+      width: 9px;
+
+      height: 9px;
+
+      border-radius: 50%;
+
+      background: #eab308;
+
+      margin-right: 8px;
+
+    }
+
+    h2 { font-size: 18px; }
+
+    .card {
+
+      padding: 18px;
+
+      margin: 16px 0;
+
+      background: var(--panel);
+
+      border: 1px solid #292929;
+
+      border-radius: 14px;
+
+    }
+
+    label {
+
+      display: block;
+
+      margin: 14px 0 8px;
+
+      font-size: 14px;
+
+    }
+
+    input, textarea {
+
+      width: 100%;
+
+      padding: 13px;
+
+      border-radius: 9px;
+
+      border: 1px solid #444;
+
+      background: #090909;
+
+      color: white;
+
+      font: inherit;
+
+    }
+
+    textarea {
+
+      min-height: 100px;
+
+      resize: vertical;
+
+    }
+
+    button {
+
+      width: 100%;
+
+      padding: 14px;
+
+      margin-top: 12px;
+
+      background: var(--red);
+
+      color: white;
+
+      border: 0;
+
+      border-radius: 9px;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+    }
+
+    button:active { opacity: 0.8; }
+
+    .result {
+
+      display: none;
+
+      margin-top: 14px;
+
+      padding: 14px;
+
+      border-radius: 9px;
+
+      overflow-wrap: anywhere;
+
+      line-height: 1.5;
+
+    }
+
+    .warning {
+
+      display: block;
+
+      background: #3b1717;
+
+      border: 1px solid #a83232;
+
+    }
+
+    .caution {
+
+      display: block;
+
+      background: #332b12;
+
+      border: 1px solid #8e7425;
+
+    }
+
+    .safe {
+
+      display: block;
+
+      background: #15301f;
+
+      border: 1px solid #31794a;
+
+    }
+
+    .small {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.5;
+
+    }
+
+    footer {
+
+      padding: 20px 0;
+
+      color: var(--muted);
+
+      text-align: center;
+
+      font-size: 12px;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <div class="logo" aria-label="Logo N">N</div>
+
+    <h1>NEXA<span>SHIELD</span></h1>
+
+    <p class="subtitle">Ta sécurité numérique, au même endroit.</p>
+
+  </header>
+
+  <section class="status">
+
+    <span class="dot"></span>
+
+    <strong>Protection locale de démonstration</strong>
+
+    <p class="small">
+
+      NexaShield analyse uniquement les éléments que tu saisis ici.
+
+      La protection générale de ton appareil n'est pas activée.
+
+    </p>
+
+  </section>
+
+  <main>
+
+    <section class="card">
+
+      <h2>01 — Analyse d'un lien</h2>
+
+      <p class="small">
+
+        Colle un lien pour rechercher des signes courants d'arnaque.
+
+        N'ouvre pas le lien pour le tester.
+
+      </p>
+
+      <label for="url">Adresse du site</label>
+
+      <input id="url" type="text"
+
+        placeholder="https://exemple.com"
+
+        autocomplete="off" spellcheck="false">
+
+      <button id="checkUrl">Analyser le lien</button>
+
+      <div id="urlResult" class="result" role="status"
+
+        aria-live="polite"></div>
+
+    </section>
+
+    <section class="card">
+
+      <h2>02 — Analyse d'un message</h2>
+
+      <p class="small">
+
+        Colle le texte d'un SMS ou d'un message suspect.
+
+        Supprime d'abord les données personnelles.
+
+      </p>
+
+      <label for="message">Contenu du message</label>
+
+      <textarea id="message"
+
+        placeholder="Colle ici le message à examiner..."
+
+        spellcheck="false"></textarea>
+
+      <button id="checkMessage">Examiner le message</button>
+
+      <div id="messageResult" class="result" role="status"
+
+        aria-live="polite"></div>
+
+    </section>
+
+    <section class="card">
+
+      <h2>03 — Protéger ses informations</h2>
+
+      <p>
+
+        <strong>Quelques règles essentielles :</strong>
+
+      </p>
+
+      <ul>
+
+        <li>N'envoie jamais tes mots de passe par message.</li>
+
+        <li>Active la double authentification.</li>
+
+        <li>Installe les mises à jour de sécurité.</li>
+
+        <li>Ne communique jamais un code reçu par SMS à un inconnu.</li>
+
+        <li>Vérifie les demandes urgentes par un autre canal officiel.</li>
+
+      </ul>
+
+      <p class="small">
+
+        Cette page ne supprime pas tes historiques et ne modifie
+
+        pas les réglages de confidentialité de ton appareil.
+
+      </p>
+
+    </section>
+
+    <section class="card">
+
+      <h2>04 — État du système</h2>
+
+      <p>
+
+        Analyse de liens : <strong>heuristiques locales</strong>
+
+      </p>
+
+      <p>
+
+        Blocage général des attaques :
+
+        <strong>non disponible dans cette version</strong>
+
+      </p>
+
+      <p>
+
+        Surveillance des appels et SMS :
+
+        <strong>non disponible dans cette version</strong>
+
+      </p>
+
+      <p>
+
+        Base de données de menaces en direct :
+
+        <strong>non connectée</strong>
+
+      </p>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    NexaShield — Prototype de cybersécurité<br>
+
+    Une absence d'alerte ne garantit jamais qu'un lien est sûr.
+
+  </footer>
+
+  <script>
+
+    "use strict";
+
+    const suspiciousWords = [
+
+      "urgent", "urgence", "mot de passe", "confirmez",
+
+      "confirmer", "compte suspendu", "compte bloqué",
+
+      "gagnez", "gagnant", "récompense", "paiement refusé",
+
+      "cliquez ici", "vérifiez votre compte", "crypto",
+
+      "virement", "carte cadeau"
+
+    ];
+
+    function showResult(element, type, title, details) {
+
+      element.className = "result " + type;
+
+      element.replaceChildren();
+
+      const heading = document.createElement("strong");
+
+      heading.textContent = title;
+
+      const paragraph = document.createElement("p");
+
+      paragraph.textContent = details;
+
+      element.append(heading, paragraph);
+
+    }
+
+    function analyseUrl() {
+
+      const input = document.getElementById("url").value.trim();
+
+      const result = document.getElementById("urlResult");
+
+      if (!input) {
+
+        showResult(result, "caution", "Lien manquant",
+
+          "Colle d'abord l'adresse à examiner.");
+
+        return;
+
+      }
+
+      let parsed;
+
+      try {
+
+        parsed = new URL(input);
+
+      } catch {
+
+        showResult(result, "warning", "Adresse non reconnue",
+
+          "L'adresse n'a pas un format URL valide. Ne l'ouvre pas.");
+
+        return;
+
+      }
+
+      const host = parsed.hostname.toLowerCase();
+
+      const flags = [];
+
+      if (parsed.protocol !== "https:") {
+
+        flags.push("Le lien n'utilise pas HTTPS.");
+
+      }
+
+      if (parsed.username || parsed.password) {
+
+        flags.push("L'adresse contient des identifiants intégrés.");
+
+      }
+
+      if (host.startsWith("xn--") || host.includes(".xn--")) {
+
+        flags.push("Le nom de domaine utilise un encodage à examiner.");
+
+      }
+
+      if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host)) {
+
+        flags.push("Le site utilise une adresse IP plutôt qu'un domaine habituel.");
+
+      }
+
+      if (host.includes("xn--") || /[^\x00-\x7F]/.test(host)) {
+
+        flags.push("Le domaine contient des caractères non ASCII.");
+
+      }
+
+      if (host.split(".").length >= 5) {
+
+        flags.push("Le nom de domaine comporte de nombreux sous-domaines.");
+
+      }
+
+      if (input.length > 200) {
+
+        flags.push("L'adresse est particulièrement longue.");
+
+      }
+
+      if (flags.length) {
+
+        showResult(result, "caution", "Prudence : signes à examiner",
+
+          flags.join(" ") +
+
+          " Ces indices ne prouvent pas une arnaque. Vérifie le domaine exact par un canal officiel.");
+
+      } else {
+
+        showResult(result, "caution", "Aucun indice simple détecté",
+
+          "Cela ne prouve pas que le site est sûr. Cette analyse locale ne consulte aucune base de menaces.");
+
+      }
+
+    }
+
+    function analyseMessage() {
+
+      const message = document.getElementById("message").value.trim();
+
+      const result = document.getElementById("messageResult");
+
+      if (!message) {
+
+        showResult(result, "caution", "Message manquant",
+
+          "Colle le texte du message à examiner.");
+
+        return;
+
+      }
+
+      const text = message.toLowerCase();
+
+      const flags = [];
+
+      for (const word of suspiciousWords) {
+
+        if (text.includes(word)) flags.push(word);
+
+      }
+
+      if (/(https?:\/\/|www\.)/i.test(message)) {
+
+        flags.push("présence d'un lien");
+
+      }
+
+      if (/\b(code|pin)\s*(de sécurité\s*)?:?\s*\d{4,8}\b/i.test(message)) {
+
+        flags.push("demande ou présence possible d'un code");
+
+      }
+
+      if (flags.length) {
+
+        showResult(result, "warning", "Message potentiellement suspect",
+
+          "Indices détectés : " + [...new Set(flags)].join(", ") +
+
+          ". Ne clique sur aucun lien et ne donne aucune information. Vérifie l'expéditeur par un canal officiel.");
+
+      } else {
+
+        showResult(result, "caution", "Vérification non concluante",
+
+          "Aucun des indices simples configurés n'a été détecté. Un message frauduleux peut sembler normal.");
+
+      }
+
+    }
+
+    document.getElementById("checkUrl")
+
+      .addEventListener("click", analyseUrl);
+
+    document.getElementById("checkMessage")
+
+      .addEventListener("click", analyseMessage);
+
+  </script>
+
+</body>
+
+</html>
